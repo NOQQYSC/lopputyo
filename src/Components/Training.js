@@ -5,11 +5,12 @@ import'ag-grid-community/dist/styles/ag-grid.css'
 import'ag-grid-community/dist/styles/ag-theme-material.css';
 import { format, formatDistance, formatRelative, getDate, subDays } from 'date-fns'
 import Addtraining from "./Addtraining";
+import Customer from "./Customer";
 
 
 
 
-function Training(props) {
+function Training() {
 
     const [trainings, setTrainings] = useState([]);
 
@@ -30,20 +31,7 @@ function Training(props) {
         
     }
 
-
-    const saveTraining = (training) => {
-        fetch('https://customerrest.herokuapp.com/gettrainings', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(training)
-            
-        })
-        .then(res => fetchData())
-        .catch(err => console.error(err))
-    }
-
+    
 
 
     const columns = [
@@ -59,7 +47,7 @@ function Training(props) {
     <div className="ag-theme-material"
     style={{height: '700px', width: '100%', margin: 'auto'}} >
       <h2>Trainings</h2>
-      <Addtraining saveTraining={saveTraining} />
+      
       <AgGridReact
             
             columnDefs={columns}

@@ -30,6 +30,7 @@ const handleInputChange = (event) => {
 
 const addTraining = () => {
     props.saveTraining(training);
+    console.log(training)
     handleClose();
 }
 

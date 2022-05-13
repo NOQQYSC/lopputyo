@@ -7,9 +7,11 @@ import'ag-grid-community/dist/styles/ag-theme-material.css';
 import Addcustomer from "./Addcustomer";
 import Editcustomer from "./Editcustomer";
 import Addtraining from "./Addtraining";
+import Training from "./Training";
 
 function Customer(props) {
     const [customers, setCustomers] = useState([]);
+    const [trainings, setTrainings] = useState([]);
 
     useEffect(() => fetchData(), []);
 
@@ -52,6 +54,19 @@ function Customer(props) {
         .catch(err => console.error(err))
     }
 
+    const saveTraining = (training) => {
+        fetch('https://customerrest.herokuapp.com/api/trainings', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(training)
+            
+        })
+        .then(res => fetchData())
+        .catch(err => console.error(err))
+    }
+
     const columns = [
         {headerName: 'First Name', field: 'firstname', sortable: true, filter: true, floatingFilter: true},
         {headerName: 'Last Name', field: 'lastname', sortable: true, filter: true, floatingFilter: true},
@@ -64,7 +79,7 @@ function Customer(props) {
             headerName: 'Add Training',
             sortable: false, filter: false, floatingFilter: false, width: 100,
             field: 'links.1.href',
-             cellRenderer: row => <Addtraining link={row.value} />
+             cellRenderer: row => <Addtraining link={row.value} saveTraining={saveTraining} />
             
          },
          {
