@@ -1,23 +1,36 @@
-import logo from './logo.svg';
+
 import './App.css';
+import {  BrowserRouter,  Routes,  Route,  Link} from"react-router-dom";
+import { render } from '@testing-library/react';
+import Customer from './Components/Customer';
+import Training from './Components/Training';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import { LayoutCssClasses } from 'ag-grid-community';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <AppBar position="static">
+      <Toolbar>
+        <Typography variant="h6">
+          Personal Training
+        </Typography>
+      </Toolbar>
+      </AppBar>
+      <h1>Welcome to React router</h1>
+      <BrowserRouter>
+      <Link to="/">Customer</Link>{' '}
+      <Link to="/training">Training</Link>{' '} 
+      
+      <Routes>
+      <Route path="/" element={<Customer />} />
+      <Route path="/training" element={<Training />} />
+      
+      
+      </Routes>
+      </BrowserRouter>
     </div>
   );
 }
