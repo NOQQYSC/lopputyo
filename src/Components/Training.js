@@ -3,9 +3,11 @@ import React, { useState, useEffect, Component } from "react";
 import { AgGridReact } from'ag-grid-react'
 import'ag-grid-community/dist/styles/ag-grid.css'
 import'ag-grid-community/dist/styles/ag-theme-material.css';
+import Button from "@mui/material/Button";
 import { format, formatDistance, formatRelative, getDate, subDays } from 'date-fns'
 import Addtraining from "./Addtraining";
 import Customer from "./Customer";
+import Calendar from "./Calendar";
 
 
 
@@ -31,16 +33,30 @@ function Training() {
         
     }
 
+    const deleteTraining = (id) => {
+        if (window.confirm('Delete this training?')) {
+        fetch(id, {method: 'DELETE'})
+        .then(res => fetchData())
+        .catch(err => console.error(err))
+        }
+    }
     
 
 
     const columns = [
-        {headerName: 'Date', field: 'date', sortable: true, filter: true, floatingFilter: true
-        //cellRenderer: field => console.log(format(field, 'dd/MM/yyyy'))
+        {headerName: 'Date', field: 'date', sortable: true, filter: true, floatingFilter: true,
+        //cellRenderer: row => format(row.field, 'dd/MM/yyyy')
+        
     },
         {headerName: 'Duration in minutes', field: 'duration', sortable: true, filter: true, floatingFilter: true},
         {headerName: 'Activity', field: 'activity', sortable: true, filter: true, floatingFilter: true},
         {headerName: 'Customer', field: 'customer.firstname', sortable: true, filter: true, floatingFilter: true},
+        {
+            sortable: false, filter: false, floatingFilter: false, width: 100,
+            headerName: '',
+             field: 'id',
+             cellRenderer: row => <Button size="small" color="secondary" onClick={() =>  deleteTraining('https://customerrest.herokuapp.com/api/trainings/' + row.value)}>Delete</Button>
+        },
     ]
 
   return (
@@ -52,6 +68,7 @@ function Training() {
             
             columnDefs={columns}
             rowData={trainings}
+            
             
             >
             </AgGridReact>

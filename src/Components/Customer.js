@@ -1,5 +1,5 @@
 import {  BrowserRouter,  Routes,  Route,  Link} from"react-router-dom";
-import React, { useState, useEffect, Component } from "react";
+import React, { useCallback, useState, useEffect, useRef, Component } from "react";
 import { AgGridReact } from'ag-grid-react'
 import Button from "@mui/material/Button";
 import'ag-grid-community/dist/styles/ag-grid.css'
@@ -9,11 +9,12 @@ import Editcustomer from "./Editcustomer";
 import Addtraining from "./Addtraining";
 import Training from "./Training";
 
-function Customer(props) {
+function Customer() {
     const [customers, setCustomers] = useState([]);
-    const [trainings, setTrainings] = useState([]);
+    
 
     useEffect(() => fetchData(), []);
+    const gridRef = useRef();
 
     const fetchData = () => {
         fetch('https://customerrest.herokuapp.com/api/customers')
@@ -53,6 +54,7 @@ function Customer(props) {
         .then(res => fetchData())
         .catch(err => console.error(err))
     }
+    
 
     const saveTraining = (training) => {
         fetch('https://customerrest.herokuapp.com/api/trainings', {
@@ -68,6 +70,7 @@ function Customer(props) {
     }
 
     const columns = [
+        
         {headerName: 'First Name', field: 'firstname', sortable: true, filter: true, floatingFilter: true},
         {headerName: 'Last Name', field: 'lastname', sortable: true, filter: true, floatingFilter: true},
         {headerName: 'Street Address', field: 'streetaddress', sortable: true, filter: true, floatingFilter: true},
@@ -96,13 +99,20 @@ function Customer(props) {
         },
     ]
 
+    const onBtnExport = useCallback(() => {
+        console.log(columns)
+        gridRef.current.api.exportDataAsCsv();
+      }, []);
+
   return (
     <div className="ag-theme-material"
                 style={{height: '700px', width: '100%', margin: 'auto'}} >
       <h2>Customers</h2>
       <Addcustomer saveCustomer={saveCustomer} />
+      <Button size="small" color="primary" onClick={onBtnExport}>Export</Button>
+
       <AgGridReact
-            
+            ref={gridRef}
             columnDefs={columns}
             rowData={customers}
             >
