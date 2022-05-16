@@ -21,7 +21,7 @@ function App() {
         </Typography>
       </Toolbar>
       </AppBar>
-      <h1>Welcome to React router</h1>
+      
       <BrowserRouter>
       <Link to="/">Customer</Link>{' '}
       <Link to="/training">Training</Link>{' '} 
