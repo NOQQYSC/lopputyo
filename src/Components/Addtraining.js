@@ -5,8 +5,9 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
-
-
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 function Addtraining(props) {
 
@@ -34,6 +35,10 @@ const addTraining = () => {
     handleClose();
 }
 
+const setDate = (value) => {
+    setTraining({...training, date: value});
+  };
+
 return(
     <div>
     <Button style={{margin: 10}} size="small" color="primary" onClick={handleClickOpen}>
@@ -49,15 +54,17 @@ return(
           New Training for {props.link}
         </DialogTitle>
         <DialogContent>
-            <TextField
-                autoFocus
-                margin="dense"
-                name="date"
-                value={training.date}
-                onChange={e => handleInputChange(e)}
-                label="Date"
-                fullWidth
-            />
+            
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DateTimePicker
+            renderInput={(props) => <TextField {...props} />}
+            name="date"
+            label="Date"
+            inputFormat="DD.MM.YYYY H:mm"
+            value={training.date}
+            onChange={setDate}
+  />
+</LocalizationProvider>
             <TextField
                 margin="dense"
                 name="duration"

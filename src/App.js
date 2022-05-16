@@ -12,10 +12,14 @@ import Typography from '@mui/material/Typography';
 import { LayoutCssClasses } from 'ag-grid-community';
 
 function App() {
+
+  
+
   return (
-    <div className="App">
+    <div className='App'>
       <AppBar position="static">
       <Toolbar>
+        
         <Typography variant="h6">
           Personal Training
         </Typography>
@@ -37,6 +41,7 @@ function App() {
       
       </Routes>
       </BrowserRouter>
+      
     </div>
   );
 }

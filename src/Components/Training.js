@@ -8,6 +8,7 @@ import { format, formatDistance, formatRelative, getDate, subDays } from 'date-f
 import Addtraining from "./Addtraining";
 import Customer from "./Customer";
 import Calendar from "./Calendar";
+import dayjs from 'dayjs'
 
 
 
@@ -45,9 +46,10 @@ function Training() {
 
     const columns = [
         {headerName: 'Date', field: 'date', sortable: true, filter: true, floatingFilter: true,
-        //cellRenderer: row => format(row.field, 'dd/MM/yyyy')
+        valueFormatter: field =>
+                dayjs(field.data.date).format("DD.MM.YYYY H:mm")},
         
-    },
+    
         {headerName: 'Duration in minutes', field: 'duration', sortable: true, filter: true, floatingFilter: true},
         {headerName: 'Activity', field: 'activity', sortable: true, filter: true, floatingFilter: true},
         {headerName: 'Customer', field: 'customer.firstname', sortable: true, filter: true, floatingFilter: true},
